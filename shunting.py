@@ -2,7 +2,7 @@
 
 
 def shunt(infix):
-  specials = {"*": 50, ".": 40, "|": 30}
+  specials = {"*": 50, ".": 40, "|": 30, "?" : 50}
 
   postfix = ""
   stack = ""

@@ -39,6 +39,22 @@ def compile(postfix):
 
       nfastack.append(nfa(initial, accept))
 
+    elif c == '?':
+      #Pop operand from stack
+      nfa1 = nfastack.pop()
+      #Create new initial and accept states
+      initial = state()
+      accept = state()
+      #Connect new states initial state to operands initial state 
+      initial.edge1 = nfa1.initial
+      initial.edge2 = accept
+
+      nfa1.accept.edge1 = accept
+
+      nfastack.append(nfa(initial, accept))
+
+
+
     else:
       accept = state()
       initial = state()
