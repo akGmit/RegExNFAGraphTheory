@@ -45,15 +45,14 @@ def compile(postfix):
       #Create new initial and accept states
       initial = state()
       accept = state()
-      #Connect new states initial state to operands initial state 
+      #Connect new initial states edge1 to operands initial state
+      #and edge2 to accept state 
       initial.edge1 = nfa1.initial
       initial.edge2 = accept
-
+      #Popped operands accept state connected to new accept state
       nfa1.accept.edge1 = accept
-
+      #Push new nfa on stack
       nfastack.append(nfa(initial, accept))
-
-
 
     else:
       accept = state()
