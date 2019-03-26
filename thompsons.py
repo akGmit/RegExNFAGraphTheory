@@ -6,6 +6,7 @@ def compile(postfix):
   nfastack = []
 
   for c in postfix:
+    
     if c == '.':
       nfa2, nfa1 = nfastack.pop(), nfastack.pop()
       nfa1.accept.edge1 = nfa2.initial
@@ -52,6 +53,22 @@ def compile(postfix):
       #Popped operands accept state connected to new accept state
       nfa1.accept.edge1 = accept
       #Push new nfa on stack
+      nfastack.append(nfa(initial, accept))
+
+    elif c =='+':
+      #Pop operand from stack
+      nfa1 = nfastack.pop()
+      #Create new initial and accept states
+      initial = state()
+      accept = state()
+
+      #Connect initial states edge1 to operands initial state, this becomes new initial state of nfa
+      initial.edge1 = nfa1.initial
+      #Original nfa accept state edge1 to new accept state, and edge2 two to initial state
+      #This way nfa accepts one or more 
+      nfa1.accept.edge1 = accept
+      nfa1.accept.edge2 = initial
+
       nfastack.append(nfa(initial, accept))
 
     else:
