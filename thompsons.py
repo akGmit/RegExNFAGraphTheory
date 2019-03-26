@@ -7,13 +7,7 @@ def compile(postfix):
 
   for c in postfix:
     
-    if c == '.':
-      nfa2, nfa1 = nfastack.pop(), nfastack.pop()
-      nfa1.accept.edge1 = nfa2.initial
-
-      nfastack.append(nfa(nfa1.initial, nfa2.accept))
-    
-    elif c == '|':
+    if c == '|':
       nfa2, nfa1 = nfastack.pop(), nfastack.pop()
       
       initial = state()
@@ -51,7 +45,7 @@ def compile(postfix):
       initial.edge1 = nfa1.initial
       initial.edge2 = accept
       #Popped operands accept state connected to new accept state
-      nfa1.accept.edge1 = accept
+      nfa1.accept = accept
       #Push new nfa on stack
       nfastack.append(nfa(initial, accept))
 
@@ -72,13 +66,29 @@ def compile(postfix):
       nfastack.append(nfa(initial, accept))
 
     else:
-      accept = state()
-      initial = state()
+      
+      #If one operand is already in stack, then we can pop it and concat to current operand in postfix
+      if len(nfastack) == 1:
+        #Pop operand from stack
+        nfa1 = nfastack.pop()
 
-      initial.label = c
-      initial.edge1 = accept
+        #Take current operand from postfix and create nfa
+        accept = state()
+        initial = state()
+        initial.label = c
+        initial.edge1 = accept
+        nfa2 = nfa(initial, accept)
 
-      nfastack.append(nfa(initial, accept))
+        nfa1.accept.edge1 = nfa2.initial
+
+        nfastack.append(nfa(nfa1.initial, nfa2.accept))
+      else:
+        accept = state()
+        initial = state()
+        initial.label = c
+        initial.edge1 = accept
+
+        nfastack.append(nfa(initial, accept))
 
   return nfastack.pop()
 
