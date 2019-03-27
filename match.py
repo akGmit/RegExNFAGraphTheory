@@ -17,7 +17,7 @@ def match(infix, string):
   for s in string:
     for c in current:
       if c.label == s:
-        next |= followes(c.edge1)
+          next |= followes(c.edge1)
 
     current = next
     next = set()

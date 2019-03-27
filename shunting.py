@@ -2,7 +2,7 @@
 
 
 def shunt(infix):
-  specials = {"*": 50, ".": 40, "|": 30, "?" : 50, '+': 50}
+  specials = {"*": 50, "|": 30, "?" : 50, '+': 50, '$': 35, '.': 40}
 
   postfix = ""
   stack = ""
@@ -23,5 +23,5 @@ def shunt(infix):
 
   while stack:
     postfix, stack = postfix + stack[-1], stack[:-1]
-
+  print(postfix)
   return postfix
