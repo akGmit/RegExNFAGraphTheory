@@ -6,7 +6,7 @@ specials = {"*": 50, "|": 30, "?" : 50, '+': 50, '$': 40}
 
 def compile(postfix):
   nfastack = []
-  pos = 0
+
   for c in postfix:
     
     if c == '.':
@@ -75,6 +75,20 @@ def compile(postfix):
 
       nfastack.append(nfa(initial, accept))
 
+    elif c == '^':
+      #Pop operand from stack 
+      nfa1 = nfastack.pop()
+
+      initial = state()
+      accept = state()
+
+      initial.edge1 = nfa1.initial
+      nfa1.accept.edge1 = accept
+      nfa1.accept.edge2 = nfa1.accept
+      
+
+      nfastack.append(nfa(nfa1.initial, nfa2.accept))
+
     else:
       
       # #If one operand is already in stack, then we can pop it and concat to current operand in postfix
@@ -99,8 +113,6 @@ def compile(postfix):
       initial.edge1 = accept
 
       nfastack.append(nfa(initial, accept))
-
-      pos = pos + 1
 
   return nfastack.pop()
 

@@ -17,7 +17,12 @@ def match(infix, string):
   for s in string:
     for c in current:
       if c.label == s:
+        #Try statement to deal with RecursionError
+        try:
           next |= followes(c.edge1)
+        except RecursionError:
+          return True
+          
 
     current = next
     next = set()
