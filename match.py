@@ -21,6 +21,7 @@ def match(infix, string):
         try:
           next |= followes(c.edge1)
         except RecursionError:
+          print('RecuresionError')
           return True
           
 

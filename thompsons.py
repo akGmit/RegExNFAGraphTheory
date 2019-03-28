@@ -85,9 +85,21 @@ def compile(postfix):
       initial.edge1 = nfa1.initial
       nfa1.accept.edge1 = accept
       nfa1.accept.edge2 = nfa1.accept
-      
 
-      nfastack.append(nfa(nfa1.initial, nfa2.accept))
+      nfastack.append(nfa(initial, accept))
+
+    # elif c == '$':
+
+    #   nfa1 = nfastack.pop()
+
+    #   initial = state()
+    #   accept = state()
+
+    #   initial.edge1 = nfa1.initial
+    #   nfa1.initial.edge2 = initial
+    #   nfa1.accept.edge1 = accept
+      
+    #   nfastack.append(nfa(initial, accept))
 
     else:
       
