@@ -6,6 +6,7 @@ specials = {"*": 50, "|": 30, "?" : 50, '+': 50, '$': 40}
 
 def compile(postfix):
   nfastack = []
+  pos = 0
 
   for c in postfix:
     
@@ -88,43 +89,30 @@ def compile(postfix):
 
       nfastack.append(nfa(initial, accept))
 
-    # elif c == '$':
+    elif c == '$':
 
-    #   nfa1 = nfastack.pop()
+      nfa1 = nfastack.pop()
 
-    #   initial = state()
-    #   accept = state()
-
-    #   initial.edge1 = nfa1.initial
-    #   nfa1.initial.edge2 = initial
-    #   nfa1.accept.edge1 = accept
+      initial = state()
+      accept = state()
+      #nfa2 = nfa(initial, state)
       
-    #   nfastack.append(nfa(initial, accept))
+      initial.edge1 = nfa1.initial
+      initial.edge2 = initial
+      
+      nfa1.accept.edge1 = accept
+
+      nfastack.append(nfa(initial , accept))
 
     else:
-      
-      # #If one operand is already in stack, then we can pop it and concat to current operand in postfix
-      # if len(nfastack) == 1:
-      #   #Pop operand from stack
-      #   nfa1 = nfastack.pop()
-
-      #   #Take current operand from postfix and create nfa
-      #   accept = state()
-      #   initial = state()
-      #   initial.label = c
-      #   initial.edge1 = accept
-      #   nfa2 = nfa(initial, accept)
-
-      #   nfa1.accept.edge1 = nfa2.initial
-
-      #   nfastack.append(nfa(nfa1.initial, nfa2.accept))
-      # else:
       accept = state()
       initial = state()
       initial.label = c
       initial.edge1 = accept
 
       nfastack.append(nfa(initial, accept))
+    
+    pos = pos + 1
 
   return nfastack.pop()
 
