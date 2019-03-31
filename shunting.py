@@ -50,6 +50,7 @@ def shunt(infix):
   #push all to postfix
   while stack:
     postfix, stack = postfix + stack[-1], stack[:-1]
+  print(postfix)
   return postfix
 
 def insertconcat(infix):
@@ -84,11 +85,11 @@ def insertconcat(infix):
         concatfix += '.'
       elif cisLetterOrDigit and nextc == '(':
         concatfix += '.'
-      elif c in '*?+':
-        concatfix += '.'
+      # elif c in '*?+':
+      #   concatfix += c
     #Else if its the last character, append it to converted infix reg ex
     else:
       concatfix = concatfix + c
     pos += 1
-
+  print(concatfix)
   return concatfix
