@@ -1,3 +1,4 @@
+"""Class representing NFA with its states"""
 class nfa:
   initial = None
   accept = None

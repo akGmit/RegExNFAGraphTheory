@@ -1,3 +1,4 @@
+"""Regex module contains functions for command line interface"""
 import argparse
 import match
 
