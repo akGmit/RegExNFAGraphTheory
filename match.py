@@ -6,6 +6,11 @@ from nfa import nfa
 
 
 def match(infix, string):
+  """Matches string to reg expression
+  When start anchot operator('^') is used, RecursionError is thrown, this happens due to accept state pointing to itself.
+  And it happens when expression evaluates to true, based on that try/except statment returns True by default and 
+  enables ^ functionality. Not smartest or cleanest way but its working.
+  """
   postfix = shunting.shunt(infix)
   nfa = thompsons.compile(postfix)
 
@@ -13,7 +18,7 @@ def match(infix, string):
   next = set()
 
   current |= followes(nfa.initial)
-
+  #Loop through each characeter
   for s in string:
     for c in current:
       if c.label == s:
@@ -21,10 +26,7 @@ def match(infix, string):
         try:
           next |= followes(c.edge1)
         except RecursionError:
-          print('RecuresionError')
           return True
-          
-
     current = next
     next = set()
 
