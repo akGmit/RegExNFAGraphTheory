@@ -13,7 +13,7 @@ def match(infix, string):
   """
   postfix = shunting.shunt(infix)
   nfa = thompsons.compile(postfix)
-
+  #Create new set 
   current = set()
   next = set()
 
@@ -22,7 +22,7 @@ def match(infix, string):
   for s in string:
     for c in current:
       if c.label == s:
-        #Try statement to deal with RecursionError
+        #Try statement to deal with RecursionError from ^ operator
         try:
           next |= followes(c.edge1)
         except RecursionError:
