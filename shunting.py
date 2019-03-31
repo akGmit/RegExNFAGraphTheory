@@ -33,15 +33,17 @@ def insertconcat(infix):
   concatfix = ""
   for c in infix:
     next = pos + 1
+    
     if next < len(infix):
+      nextc = infix[next]
       concatfix = concatfix + c
-      if c.isalpha() and infix[next].isalpha():
+      if (c.isalpha() or c.isdigit()) and (nextc.isalpha() or nextc.isdigit()):
         concatfix = concatfix + '.'
-      elif c == ')' and infix[next].isalpha():
+      elif c == ')' and (nextc.isalpha() or nextc.isdigit()):
         concatfix = concatfix + '.'
-      elif c == ')' and infix[next] == '(':
+      elif c == ')' and nextc == '(':
         concatfix = concatfix + '.'
-      elif c.isalpha() and infix[next] == '(':
+      elif (c.isalpha() or c.isdigit()) and nextc == '(':
         concatfix = concatfix + '.'
       elif c in '*?+':
         concatfix = concatfix + '.'
